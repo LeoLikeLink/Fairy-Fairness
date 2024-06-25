@@ -30,35 +30,5 @@ class ChessAnalyzer:
             engine.quit()
             print("Game Finished")
 
-engine_path="fairy-stockfish_x86-64-bmi2.exe"
-
-#Example Chess960
-classicboard = chess.Board()
-
-# Transposed Pieces
-index= 524
-board960 = chess.Board(chess960=True)
-board960.set_chess960_pos(index)
-
-# Example Atomic
-boardatomic = chess.variant.AtomicBoard()
-
-# Example Antichess
-
-boardanti = chess.variant.AntichessBoard()
-
-time = 0.1
-depth = 20
-
-
-Analyzer1 = ChessAnalyzer(engine_path,classicboard,0.1,20)
-
-Analyzer1.engine_play()
-print(Analyzer1.evaluate_score())
-
-# print(evaluate_board(boardatomic,depth,time))
-
-# Structure of output
-#[variant,fma,avg_game_length,draw_rate]
 
 
