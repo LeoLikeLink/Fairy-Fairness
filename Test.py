@@ -1,18 +1,29 @@
 from ChessAnalyzer import ChessAnalyzer
 import chess
 import chess.engine
+import csv
+import os
 
 engine_path="fairy-stockfish_x86-64-bmi2.exe"
 
-index= 524
-time = 0.1
-depth = 20
-board960 = chess.Board(chess960=True)
-board960.set_chess960_pos(index)
+play_time = 0.1
 
-Analyzer1 =  ChessAnalyzer(engine_path,board960,time,depth)
-print(Analyzer1.evaluate_fma())
-# fma_array = []
+def list_of_Chess960_fma(to_index):
+    results = []
+    for i in range(to_index):
+        board960 = chess.Board(chess960=True)
+        board960.set_chess960_pos(i)
+        Analyzer = ChessAnalyzer(engine_path, board960)
+        fma_evaluation = Analyzer.evaluate_fma()
+        print(f"FMA of Variant: {i} calculated : {fma_evaluation}")
 
-# fma_array.append(Analyzer1)
-# print(fma_array[0])
+        results.append([i,fma_evaluation])
+    return results
+def write_to_csv(results,file_name):
+    file_name += ".csv"
+    with open(file_name, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Index', 'FMA Result'])  
+        writer.writerows(results)
+
+write_to_csv(list_of_Chess960_fma(3),"test1")

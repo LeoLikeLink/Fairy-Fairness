@@ -4,7 +4,7 @@ import chess.variant
 import copy
 
 class ChessAnalyzer:
-    def __init__(self, engine_path,board: chess.Board,play_time,depth):
+    def __init__(self, engine_path,board: chess.Board,depth=40,play_time=0.1):
         self.engine_path = engine_path
         self.board = copy.deepcopy(board)
         self.play_time = play_time
@@ -14,7 +14,11 @@ class ChessAnalyzer:
     def evaluate_fma(self):
         with chess.engine.SimpleEngine.popen_uci(self.engine_path) as engine:
             result = engine.analyse(self.board, chess.engine.Limit(depth=self.depth))
+            engine.quit()
             return result['score'].relative
+            
+
+        
 
     def evaluate_score(self):
         return self.board.result()
