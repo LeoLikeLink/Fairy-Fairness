@@ -21,20 +21,18 @@ def list_of_Chess960_fma(to_index):
         results.append([i,fma_evaluation])
     return results
 
-def list_of_fen_position_fma(fen_list):
+def list_of_fen_position_fma(fen_list,depth):
     results = []
-    i = 0
 
-    for fen_postion in fen_list:
+    for i,fen_postion in enumerate(fen_list):
         
         board = chess.Board()
         board.set_board_fen(fen_postion)
-        Analyzer = ChessAnalyzer(engine_path, board)
+        Analyzer = ChessAnalyzer(engine_path, board,depth)
         fma_evaluation = Analyzer.evaluate_fma()
         print(f"FMA of Position: {fen_postion} calculated : {fma_evaluation}")
 
         results.append([i,fma_evaluation])
-        i =+1
     return results
 
 def write_to_csv(results,file_name):
@@ -46,10 +44,9 @@ def write_to_csv(results,file_name):
 def import_list_of_fen_from_csv(file_name):
     result = []
     try:
-        df = pd.read_csv(file_name,header=None)
-        for row in df.iterrows():
-            result.append(row[1])
-        return result
+        df = pd.read_csv(file_name)
+        fen_list = df["FEN"].astype(str).to_list()
+        return fen_list
     except FileNotFoundError:
         print(f"Error: File '{file_name}' not found.")
         return None
@@ -61,11 +58,6 @@ def import_list_of_fen_from_csv(file_name):
         return None
 
         
-
-# board_custom = chess.Board()
-# board_custom.set_board_fen("rnbqkbnr/8/pppppppp/8/8/PPPPPPPP/8/RNBQKBNR")
-
-# Analyzer = ChessAnalyzer(engine_path,board_custom,20)
-results = list_of_fen_position_fma(import_list_of_fen_from_csv("FENList.csv"))
+results = list_of_fen_position_fma(import_list_of_fen_from_csv("FENList.csv"),10)
 
 write_to_csv(results,"test1")
