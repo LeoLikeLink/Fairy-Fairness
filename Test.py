@@ -30,14 +30,14 @@ def list_of_fen_position_fma(fen_list,depth):
         board.set_board_fen(fen_postion)
         Analyzer = ChessAnalyzer(engine_path, board,depth)
         fma_evaluation = Analyzer.evaluate_fma()
-        print(f"FMA of Position: {fen_postion} calculated : {fma_evaluation}")
+        print(f"FMA of Position: {i} calculated : {fma_evaluation}")
 
         results.append([i,fma_evaluation])
     return results
 
 def write_to_csv(results,file_name):
     file_name += ".csv"
-    df = pd.DataFrame(results, columns=['Index', 'FMA Result'])
+    df = pd.DataFrame(results, columns=['Index', 'FMA'])
     df.to_csv(file_name,index=False)
     print(f"Data successfully written to '{file_name}'")
 
