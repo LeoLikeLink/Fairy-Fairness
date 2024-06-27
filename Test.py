@@ -9,12 +9,12 @@ engine_path="fairy-stockfish_x86-64-bmi2.exe"
 
 play_time = 0.1
 
-def list_of_Chess960_fma(to_index):
+def list_of_Chess960_fma(to_index,depth):
     results = []
     for i in range(to_index):
         board960 = chess.Board(chess960=True)
         board960.set_chess960_pos(i)
-        Analyzer = ChessAnalyzer(engine_path, board960,10)
+        Analyzer = ChessAnalyzer(engine_path, board960,depth)
         fma_evaluation = Analyzer.evaluate_fma()
         print(f"FMA of Variant: {i} calculated : {fma_evaluation}")
 
@@ -58,6 +58,6 @@ def import_list_of_fen_from_csv(file_name):
         return None
 
         
-results = list_of_fen_position_fma(import_list_of_fen_from_csv("FENList.csv"),10)
+results = list_of_Chess960_fma(960,25)
 
-write_to_csv(results,"test1")
+write_to_csv(results,"CHESS960_FMA_d25")
