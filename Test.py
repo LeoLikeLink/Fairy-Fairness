@@ -58,6 +58,6 @@ def import_list_of_fen_from_csv(file_name):
         return None
 
         
-results = list_of_Chess960_fma(960,25)
+results = list_of_Chess960_fma(960,20)
 
-write_to_csv(results,"CHESS960_FMA_d25")
+write_to_csv(results,"CHESS960_FMA_d20")
